@@ -1,0 +1,48 @@
+
+.root {
+    -fx-background-color: transparent ;
+}       
+.label {
+	-fx-text-fill:  rgb(0,0,0);
+	-fx-color : transparent;
+	-fx-font-size : 15 pt;
+}
+.button{
+-fx-font-size : 15 pt;
+-fx-text-fill:  rgb(0,0,0);
+ -fx-font-weight: bold;
+}
+.text-field {
+    -fx-background-color:rgb(255,255,255);
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 1 ;
+     -fx-border-color: black;
+    
+     -fx-font-weight: bold;
+      -fx-min-width: 300;
+    -fx-font-size : 10 pt;
+}
+#audio .label,#video .label {
+ 	-fx-font-weight: bold;
+	-fx-text-fill:  rgb(255,0,0);
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background ;
+}
+#labStop {
+	-fx-text-fill:  rgb(255,0,0);
+	-fx-font-size : 10 pt;
+	-fx-font-weight: bold;
+}
+.popup {
+    -fx-background-color:rgb(255,255,255);
+    -fx-padding:-5;
+    -fx-border-color: green; 
+    -fx-border-width: 5;
+    -fx-font-size: 16;
+     -fx-font-weight: bold;
+}
+#popLabel{
+-fx-padding: 15;
+
+}
