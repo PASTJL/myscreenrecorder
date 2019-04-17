@@ -204,7 +204,7 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 						+ ((Integer) ((Double) rectToSee.getHeight()).intValue()).toString());
 
 		if (Main.isWin) {
-			System.out.println("lancement =>" + Main.strCmd);
+			System.out.println("Rectangle lancement =>" + Main.strCmd);
 			String[] args = { "cmd.exe", "/c", Main.strCmd };
 			try {
 				Main.pb = new ProcessBuilder(args);
@@ -349,8 +349,24 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 			System.out.println(arg0.getKeyCode());
 			Main.mapIntegerLong.hashmap.put((Integer) code, (Long) new Date().getTime());
 			if (Main.mapIntegerLong.stop()) {
+				
+				try {
+
+					if (null !=Main. osStop) {
+						Main.osStop.write('q');
+						Main.osStop.write('\n');
+
+						Main.osStop.flush();
+						Main.osStop.close();
+						System.out.println("Arret Enregistrement");
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				recording = false;
 			Main.stopRec(Main.stage);
+					
 				
 			}
 		}
