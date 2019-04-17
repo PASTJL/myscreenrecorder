@@ -3,7 +3,7 @@
 Under Windows, I could not (or did) find simple free software to make screenshots and
 audio as video. Very useful for tutorials for example.</br>
 There are some free but the recording time is limited or there is a watermark inserted at the
-beginning and end of the recording. Others generate uncompressed (very large) avi files with a size
+beginning and end of the recording.</br> Others generate uncompressed (very large) avi files with a size
 limit of 2 GB.</br>
 Under Linux, I know at least 2:</br>
 - RecordMyDesktop =&gt; http://recordmydesktop.sourceforge.net/downloads.php </br>
@@ -12,8 +12,9 @@ Although my software can run under Linux, I will focus instead on its use on Win
 provide all the operating modes and scripts to make it work also under Linux, without details.
 <br/>
 <h1><b>myscreenrecorder</B></h1>
-This is the current application which is a <b>ffmpeg graphic front end </b>for recording the screen
-and possibly audio through a microphone or through the speakers used (headphones or pc specific).
+This application is just a <b>ffmpeg graphic front end </b>for recording the screen
+and possibly audio through a microphone or through the speakers used (headphones or pc specific).</br>
+ffmpeg is behind the scene, no need to knowit.</br>
 In addition to the software already mentioned, I also use a library (provided with the github
 package) interface JNI JnativeHook available here =>
 https://github.com/kwhat/jnativehook/releases/download/2.1.0/jnativehook-2.1.0.zip
