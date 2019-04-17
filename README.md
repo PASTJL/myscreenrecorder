@@ -14,7 +14,7 @@ provide all the operating modes and scripts to make it work also under Linux, wi
 <h1><b>myscreenrecorder</B></h1>
 This application is just a <b>ffmpeg graphic front end </b>for recording the screen
 and possibly audio through a microphone or through the speakers used (headphones or pc specific).</br>
-ffmpeg is behind the scene, no need to knowit.</br>
+<b color="red">ffmpeg is behind the scene, no need to know  and play with it.</b></br>
 In addition to the software already mentioned, I also use a library (provided with the github
 package) interface JNI JnativeHook available here =>
 https://github.com/kwhat/jnativehook/releases/download/2.1.0/jnativehook-2.1.0.zip
