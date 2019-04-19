@@ -213,6 +213,9 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 				InputStream is = Main.p.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
+				is.close();
+				InputStream err = Main.p.getErrorStream();
+				err.close();
 				Main.osStop = Main.p.getOutputStream();
 
 			} catch (IOException e) {
@@ -228,6 +231,9 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 				InputStream is = Main.p.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
+				is.close();
+				InputStream err = Main.p.getErrorStream();
+				err.close();
 				Main.osStop = Main.p.getOutputStream();
 
 			} catch (IOException e) {
@@ -358,7 +364,7 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 
 						Main.osStop.flush();
 						Main.osStop.close();
-						System.out.println("Arret Enregistrement");
+						System.out.println("Rectangle Arret Enregistrement");
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

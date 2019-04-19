@@ -95,6 +95,10 @@ public class Main extends Application implements NativeKeyListener {
 	public static String strCmd;
 	public static ProcessBuilder pb;
 	public static Process p;
+	public static InputStream is = null;
+	public static InputStream err = null;
+	public static InputStreamReader isr = null;
+	public static BufferedReader br = null;
 	public static Thread myThread;
 	public static String strModifStop1;
 	public static String strModifStop2;
@@ -145,13 +149,13 @@ public class Main extends Application implements NativeKeyListener {
 		if (isWindows()) {
 
 			try {
-				 pb = new ProcessBuilder(testW10NVIDIA);
-				pb.redirectErrorStream(true);
-				 p = pb.start();
+				ProcessBuilder pbloc = new ProcessBuilder(testW10NVIDIA);
+				pbloc.redirectErrorStream(true);
+				Process ploc = pbloc.start();
 
-				InputStream processOutput = p.getInputStream();
+				InputStream processOutput = ploc.getInputStream();
 				try {
-					p.getOutputStream().close(); // fermeture du flux stdin inutilisé
+					ploc.getOutputStream().close(); // fermeture du flux stdin inutilisé
 
 					// lecture du flux par bloc de 512 bytes :
 					byte[] b = new byte[10240];
@@ -163,7 +167,7 @@ public class Main extends Application implements NativeKeyListener {
 
 					}
 
-					p.waitFor();
+					ploc.waitFor();
 				} finally {
 					processOutput.close();
 				}
@@ -396,7 +400,7 @@ public class Main extends Application implements NativeKeyListener {
 			String keyCmd;
 
 			public void handle(ActionEvent event) {
-
+				outFileOnly = "capture-";
 				String audioChoose = audioChoiceBox.getSelectionModel().getSelectedItem();
 
 				butStop.setDisable(false);
@@ -494,7 +498,16 @@ public class Main extends Application implements NativeKeyListener {
 
 					// System.out.println("Enregistrement a partir de la");
 				} else {
-					lancerFullScreen(strCmd);
+//					Platform.runLater(new Runnable() {
+//
+//						@Override
+//						public void run() {
+							lancerFullScreen(strCmd);
+
+//						}
+//
+//					});
+
 				}
 			}
 
@@ -502,12 +515,13 @@ public class Main extends Application implements NativeKeyListener {
 		butStop.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-				if (withRectangle) {
+				System.out.println("Debut Button stop Arret Enregistrement");
+				
 					try {
 
 						if (null != osStop) {
 							osStop.write('q');
-							osStop.write('\n');
+							osStop.write('\r');
 
 							osStop.flush();
 							osStop.close();
@@ -517,12 +531,40 @@ public class Main extends Application implements NativeKeyListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					osStop=null;
-				}
-				stopRec(primaryStage);
+				
+				// if (!withRectangle) {
+			//	Platform.runLater(new Runnable() {
 
+				//	@Override
+					//public void run() {
+//						try {
+//
+//							if (null != osStop) {
+//								osStop.write((byte) 'q');
+//								osStop.write('\r');
+//								osStop.write('\n');
+//								osStop.flush();
+//
+//								osStop.close();
+//
+//							}
+//							is.close();
+//							err.close();
+//							p.destroy();
+//							// System.out.println("exit value="+p.exitValue());
+//							System.out.println("Button stop Arret Enregistrement");
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+						//osStop = null;
+						// }
+						stopRec(primaryStage);
+
+				//	}
+			//	});
 			}
-
+			//}
 		});
 
 		addListeners();
@@ -567,18 +609,38 @@ public class Main extends Application implements NativeKeyListener {
 	protected void lancerFullScreen(String strCmd) {
 		if (isWin) {
 			String[] args = { "cmd.exe", "/c", strCmd };
-			try {
-				pb = new ProcessBuilder(args);
-				pb = pb.redirectErrorStream(true); // on mélange les sorties du processus
-				p = pb.start();
-				InputStream is = p.getInputStream();
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
-				osStop = p.getOutputStream();
+		//	Platform.runLater(
+			new Thread(new Runnable() {
 
-			} catch (IOException e) {
+				@Override
+				public void run() {
 
-			}
+					try {
+						pb = new ProcessBuilder(args);
+						pb = pb.redirectErrorStream(false); // on mélange les sorties du processus
+						p = pb.start();
+						
+						// on ferme tous les inputStream pour eviter la saturation des buffers
+						is = p.getInputStream();
+						is.close();
+						err=p.getErrorStream();
+						err.close();
+						//isr = new InputStreamReader(is);
+						//br = new BufferedReader(isr);
+						osStop = p.getOutputStream();
+						
+						
+						
+					} catch (IOException  e ) {
+
+					} 
+					
+
+				}
+			}).start();
+			
+			//});
+
 		} else if (isLinux()) {
 			// Il faut donner la taille de l ecran
 			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -592,9 +654,10 @@ public class Main extends Application implements NativeKeyListener {
 				pb = new ProcessBuilder(args);
 				pb = pb.redirectErrorStream(true); // on mélange les sorties du processus
 				p = pb.start();
-				InputStream is = p.getInputStream();
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
+				is = p.getInputStream();
+				is.close();
+				err=p.getErrorStream();
+				err.close();
 				osStop = p.getOutputStream();
 
 			} catch (IOException e) {
@@ -683,6 +746,20 @@ public class Main extends Application implements NativeKeyListener {
 			System.out.println(arg0.getKeyCode());
 			mapIntegerLong.hashmap.put((Integer) code, (Long) new Date().getTime());
 			if (mapIntegerLong.stop()) {
+				try {
+
+					if (null != osStop) {
+						osStop.write('q');
+						osStop.write('\r');
+
+						osStop.flush();
+						osStop.close();
+						System.out.println("Arret Enregistrement");
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				stopRec(stage);
 			}
 		}
@@ -693,22 +770,7 @@ public class Main extends Application implements NativeKeyListener {
 
 		butRec.setDisable(false);
 		butStop.setDisable(true);
-		if (!withRectangle) {
-			try {
-
-				if (null != osStop) {
-					osStop.write('q');
-					osStop.write('\n');
-
-					osStop.flush();
-					osStop.close();
-					System.out.println("Arret Enregistrement");
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 		Platform.runLater(new Runnable() {
 
 			@Override
