@@ -155,7 +155,7 @@ public class Main extends Application implements NativeKeyListener {
 
 				InputStream processOutput = ploc.getInputStream();
 				try {
-					ploc.getOutputStream().close(); // fermeture du flux stdin inutilisé
+					ploc.getOutputStream().close(); // fermeture du flux stdin inutilisï¿½
 
 					// lecture du flux par bloc de 512 bytes :
 					byte[] b = new byte[10240];
@@ -338,7 +338,14 @@ public class Main extends Application implements NativeKeyListener {
 		tfOutput.setTooltip(new Tooltip("File name auto  : output-AA-mm-dd-HH-MM-ss.mkv"));
 		hbox2.getChildren().add(tfOutput);
 		hbox2.getChildren().add(butBrowse);
-		Scene scene = new Scene(root, 500, 100);
+		Scene scene = null;
+		if(isWin) {
+			scene=	new Scene(root, 500, 100);
+		}
+		else
+		{
+			scene=	new Scene(root, 550, 100);
+		}
 		primaryStage.setScene(scene);
 		root.getStylesheets().add(Main.STYLECSS.toExternalForm());
 
@@ -509,21 +516,22 @@ public class Main extends Application implements NativeKeyListener {
 
 			public void handle(ActionEvent event) {
 				System.out.println("Debut Button stop Arret Enregistrement");
+				//if (isWin || withRectangle) {
+					try {
 
-				try {
+						if (null != osStop) {
+							osStop.write('q');
+							osStop.write('\r');
 
-					if (null != osStop) {
-						osStop.write('q');
-						osStop.write('\r');
-
-						osStop.flush();
-						osStop.close();
-						System.out.println("Arret Enregistrement");
+							osStop.flush();
+							osStop.close();
+							System.out.println("Arret Enregistrement");
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//}
 
 				stopRec(primaryStage);
 
@@ -543,7 +551,6 @@ public class Main extends Application implements NativeKeyListener {
 
 	private void addListeners() {
 
-		
 		// System.out.println("Adding Listeners");
 		// Get the logger for "org.jnativehook" and set the level to off.
 		java.util.logging.Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -573,15 +580,16 @@ public class Main extends Application implements NativeKeyListener {
 	protected void lancerFullScreen(String strCmd) {
 		if (isWin) {
 			String[] args = { "cmd.exe", "/c", strCmd };
+			
 			// Platform.runLater(
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
-
+ 
 					try {
 						pb = new ProcessBuilder(args);
-						pb = pb.redirectErrorStream(false); // on mélange les sorties du processus
+						pb = pb.redirectErrorStream(false); // on mï¿½lange les sorties du processus
 						p = pb.start();
 
 						// on ferme tous les inputStream pour eviter la saturation des buffers
@@ -610,10 +618,10 @@ public class Main extends Application implements NativeKeyListener {
 					((Integer) ((Double) primaryScreenBounds.getWidth()).intValue()).toString() + "x"
 							+ ((Integer) ((Double) primaryScreenBounds.getHeight()).intValue()).toString());
 			String[] args = { "/bin/bash", "-c", strCmd };
-			// System.out.println("Linux / full screen cmd="+ strCmd);
+			System.out.println("Linux / full screen cmd="+ strCmd);
 			try {
 				pb = new ProcessBuilder(args);
-				pb = pb.redirectErrorStream(true); // on mélange les sorties du processus
+				pb = pb.redirectErrorStream(true); // on mï¿½lange les sorties du processus
 				p = pb.start();
 				is = p.getInputStream();
 				is.close();
@@ -631,13 +639,6 @@ public class Main extends Application implements NativeKeyListener {
 	protected void lancerWithRectangle(String strCmd, Stage primaryStage) {
 		// Creation du rectangle
 		// System.out.println("strCmd avant Rectangle => " + strCmd);
-		try {
-			GlobalScreen.unregisterNativeHook();
-			GlobalScreen.removeNativeKeyListener(this);
-		} catch (NativeHookException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		primaryStage.hide();
 		choiceRec = true;
@@ -744,7 +745,7 @@ public class Main extends Application implements NativeKeyListener {
 				}
 				String message = "";
 				if ((System.getProperty("user.language") + "_" + System.getProperty("user.country")).contains("fr")) {
-					message = "Enregistrement terminé , fichier resultat => " + tfOutput.getText() + File.separator
+					message = "Enregistrement terminï¿½ , fichier resultat => " + tfOutput.getText() + File.separator
 							+ outFileOnly + "\n Cliquer pour fermer";
 				} else {
 					message = "Recording stopped, file result => " + tfOutput.getText() + File.separator + outFileOnly

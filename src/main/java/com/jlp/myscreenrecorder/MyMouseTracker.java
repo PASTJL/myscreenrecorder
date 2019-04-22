@@ -181,6 +181,7 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 					rectToSee.setHeight(H);
 					rectToSee.setVisible(true);
 					rectToSee.toFront();
+					primaryStage.setAlwaysOnTop(true);
 				}
 			});
 			// } else if (arg0.getButton() == 3 || arg0.getButton() == 2) {
@@ -208,7 +209,7 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 			String[] args = { "cmd.exe", "/c", Main.strCmd };
 			try {
 				Main.pb = new ProcessBuilder(args);
-				Main.pb = Main.pb.redirectErrorStream(true); // on mélange les sorties du processus
+				Main.pb = Main.pb.redirectErrorStream(true); // on mï¿½lange les sorties du processus
 				Main.p = Main.pb.start();
 				InputStream is = Main.p.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
@@ -222,11 +223,11 @@ public class MyMouseTracker implements NativeMouseInputListener, NativeKeyListen
 
 			}
 		} else if (Main.isLinux()) {
-			String[] args = { "bash", Main.strCmd };
-
+			String[] args = { "/bin/bash","-c", Main.strCmd };
+			System.out.println("Linux Cmd="+Main.strCmd);
 			try {
 				Main.pb = new ProcessBuilder(args);
-				Main.pb = Main.pb.redirectErrorStream(true); // on mélange les sorties du processus
+				Main.pb = Main.pb.redirectErrorStream(true); // on mï¿½lange les sorties du processus
 				Main.p = Main.pb.start();
 				InputStream is = Main.p.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
