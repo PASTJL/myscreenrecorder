@@ -1,14 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
-	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.6  (Win32)">
-	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGEDBY" CONTENT="jlp ">
-	<META NAME="CHANGED" CONTENT="20190422;11242109">
-</HEAD>
-<BODY LANG="fr-FR" DIR="LTR">
+
 <P># myscreenrecorder 
 </P>
 <H1>Context</H1>
@@ -45,5 +35,6 @@ https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
 <BR><BR><B>To install , download the zip project from here, and read
 the manual under manuals directory ( English and french) to finalize
 the installation and the configuration</B></P>
-</BODY>
-</HTML>
+
+
+
