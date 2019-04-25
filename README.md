@@ -26,7 +26,7 @@ addition to the software already mentioned, I also use a library
 (provided with the github package) interface JNI JnativeHook
 available here =&gt;
 https://github.com/kwhat/jnativehook/releases/download/2.1.0/jnativehook-2.1.0.zip
-<BR/>The others logicials are : 
+<BR/>The others softwares are : 
 <ul>
 <li>FFMPEG static :
 https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-latest-win64-static.zip
@@ -37,8 +37,8 @@ http://gluonhq.com/download/javafx-11-0-2-sdk-windows/
 https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
 </ul>
 <BR>
-You must install this last 3 logicials first as described in the documatention.<BR>
+You must install this last 3 softwares first as described in the documentation.<BR>
 <BR><BR><B>To install , download the zip project from here, and read
-the manual under manuals directory ( English and french) to finalize
+the manual under manuals directory ( English and French) to finalize
 the installation and the configuration</B></P>
 
