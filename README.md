@@ -35,9 +35,4 @@ https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip
 <BR><BR><B>To install , download the zip project from here, and read
 the manual under manuals directory ( English and french) to finalize
 the installation and the configuration</B></P>
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 8bf1d82e9713ffcbfa024c3fa6657b014abd3faf
